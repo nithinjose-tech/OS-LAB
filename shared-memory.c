@@ -15,18 +15,17 @@ pthread_mutex_t mutexBuffer;
 
 int buffer[10];
 int count = 0;
+int count1=0;
 
 void* producer(void* args) {
     while (1) {
-        // Produce
+     
         int x = rand() % 100;
         sleep(1);
-
-        // Add to the buffer
         sem_wait(&semEmpty);
         pthread_mutex_lock(&mutexBuffer);
         buffer[count] = x;
-          printf("Produced %d\n", x);
+          printf("Produced %d\n",x);
         count++;
         pthread_mutex_unlock(&mutexBuffer);
         sem_post(&semFull);
@@ -37,16 +36,15 @@ void* consumer(void* args) {
     while (1) {
         int y;
 
-        // Remove from the buffer
+      
         sem_wait(&semFull);
         pthread_mutex_lock(&mutexBuffer);
-        y = buffer[count - 1];
-        count--;
+        
+        y = buffer[count1];
+        count1++;
         pthread_mutex_unlock(&mutexBuffer);
         sem_post(&semEmpty);
-
-        // Consume
-        printf("Got %d\n", y);
+        printf("Got %d\n",y);
         sleep(1);
     }
 }
