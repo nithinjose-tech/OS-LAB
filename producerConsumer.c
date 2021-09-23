@@ -8,7 +8,7 @@ int mutex = 1;
 int full = 0;
 
 
-int empty = 10, x = 0;
+int empty = 10, x = 0,y=0;
 
 
 void producer()
@@ -44,8 +44,8 @@ void consumer()
 	++empty;
 	printf("\nConsumer consumes "
 	"item %d",
-	x);
-	x--;
+	y+1);
+	y++;
 
 
 	++mutex;
